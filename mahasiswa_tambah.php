@@ -21,7 +21,7 @@
                 $tmp = $_FILES['foto']['tmp_name'];
                 $size = $_FILES['foto']['size'];
                 $ekstensi = array('jpg', 'png', 'jpeg');
-                $ekstensi_file = strtolower(end(explode('.', $_FILES['foto']['name'])));
+                $ekstensi_file = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
                 $ekstensi_ok = in_array($ekstensi_file, $ekstensi);
 
                 //validasi
@@ -44,7 +44,7 @@
                         </div>";
                 } elseif ((!$ekstensi_ok)) {
                     echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                              <strong>Gagal!!!</strong> Ukuran Foto Tidak Boleh Lebih Dari 1Mb!!
+                              <strong>Gagal!!!</strong> Format Foto harus jpg, png, jpeg!!
                               <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                             </div>";
                 } else {

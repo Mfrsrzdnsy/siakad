@@ -14,7 +14,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Foto</th>
+                        <th scope="col">Foto user</th>
                         <th scope="col">ID User</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Level</th>

@@ -68,21 +68,24 @@
             ?>
         <form method="POST" action="" enctype="multipart/form-data">
             <div class="row mb-3">
-                <label for="inputEmail3" class="col-sm-4 col-form-label">Nomor Induk Dosen Nasional</label>
+                <label for="inputEmail3" class="col-sm-4 col-form-label">Nomor Induk Dosen Nasional <font color="red">*
+                    </font></label>
                 <div class="col-sm-8">
-                    <input type="text" name="nidn" class="form-control" id="inputEmail3">
+                    <input type="text" name="nidn" class="form-control" id="inputEmail3" required>
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="inputPassword3" class="col-sm-4 col-form-label">Nama Dosen</label>
+                <label for="inputPassword3" class="col-sm-4 col-form-label">Nama Dosen <font color="red">*</font>
+                </label>
                 <div class="col-sm-8">
-                    <input type="text" name="nama" class="form-control" id="inputPassword3">
+                    <input type="text" name="nama" class="form-control" id="inputPassword3" required>
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="inputEmail3" class="col-sm-4 col-form-label">Pendidikan</label>
+                <label for="inputEmail3" class="col-sm-4 col-form-label">Pendidikan <font color="red">*</font></label>
                 <div class="col-sm-8">
-                    <select name="pendidikan" class="form-select" aria-label="Default select example">
+                    <select name="pendidikan" class="form-select" aria-label="Default select example" required>
+                        <option value="">--- Pilih Pendidikan ---</option>
                         <option value="Magister Ilmu Komputer: M.Kom">Magister Ilmu Komputer: M.Kom.</option>
                         <option value="Magister Teknologi Informasi: M.TI.">Magister Teknologi Informasi: M.TI.
                         </option>
@@ -111,11 +114,13 @@
             <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-4 col-form-label">Alamat</label>
                 <div class="col-sm-8">
-                    <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"
+                        required></textarea>
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="inputPassword3" class="col-sm-4 col-form-label">Upload Foto</label>
+                <label for="inputPassword3" class="col-sm-4 col-form-label">Upload Foto <font color="red">*</font>
+                    </label>
                 <div class="col-sm-8">
                     <input class="form-control" name="foto" type="file" id="formFile">
                 </div>

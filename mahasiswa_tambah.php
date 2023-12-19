@@ -1,4 +1,8 @@
 <?php if ($_SESSION['level'] == "admin") { ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
 <div class="card">
     <div class="card-header text-bg-warning">
         DATA MAHASISWA
@@ -83,9 +87,10 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="inputEmail3" class="col-sm-4 col-form-label">Program Studi</label>
+                <label for="inputEmail3" class="col-sm-4 col-form-label">Program Studi <font color="red">*</font>
+                </label>
                 <div class="col-sm-8">
-                    <select name="prodi" class="form-select" aria-label="Default select example">
+                    <select name="prodi" class="form-select" aria-label="Default select example" required>
                         <option value="">--- Pilih Program Study ---</option>
                         <option value="Teknik Informatika">Teknik Informatika</option>
                         <option value="Sistem Informasi">Sistem Informasi</option>
@@ -96,9 +101,9 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="inputEmail3" class="col-sm-4 col-form-label">Semester</label>
+                <label for="inputEmail3" class="col-sm-4 col-form-label">Semester <font color="red">*</font></label>
                 <div class="col-sm-8">
-                    <select name="semester" class="form-select" aria-label="Default select example">
+                    <select name="semester" class="form-select" aria-label="Default select example" required>
                         <option value="">--- Pilih Semester ---</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -131,13 +136,21 @@
             <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-4 col-form-label">Alamat</label>
                 <div class="col-sm-8">
-                    <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"
+                        required></textarea>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-4 col-form-label"></label>
+                <div class="col-sm-8">
+                    <img id="showImage" src="foto/<?php echo $a['foto']; ?>" width="70px" class="img-thumbnail"
+                        alt="..."></td>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-4 col-form-label">Upload Foto</label>
                 <div class="col-sm-8">
-                    <input class="form-control" name="foto" type="file" id="formFile">
+                    <input class="form-control" name="foto" type="file" id="image">
                 </div>
             </div>
             <input type="submit" class="btn btn-warning" name="simpan" value="SIMPAN">
@@ -145,6 +158,20 @@
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#image').change(function(e) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#showImage').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(e.target.files['0']);
+    });
+});
+</script>
+
+
 <?php
 } else {
     echo "<font color='red'><h3>Anda bukan Admin</h3></font>";

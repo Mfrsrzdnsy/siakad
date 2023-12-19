@@ -14,17 +14,49 @@
                 $pendidikan = $_POST['pendidikan'];
                 $jenis_kelamin = $_POST['jenis_kelamin'];
                 $alamat = $_POST['alamat'];
+
+                // Validasi Foto
                 $foto = $_FILES['foto']['name'];
                 $tmp = $_FILES['foto']['tmp_name'];
+                $size = $_FILES['foto']['size'];
+                $ekstensi = array('jpg', 'png', 'jpeg');
+                $ekstensi_file = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
+                $ekstensi_ok = in_array($ekstensi_file, $ekstensi);
+
+                // Validasi
+                $cek = mysqli_query($koneksi, "SELECT * FROM tbldosen WHERE nidn='$nidn'");
+                $row = mysqli_num_rows($cek);
+                if ($row > 0) {
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            <strong>Gagal!!!</strong> Nomor Induk Dosen Nasional Sudah Ada!!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+                } elseif (strlen($nidn) <> 7) {
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                          <strong>Gagal!!!</strong> NIDN Harus 7 Karakter!!
+                          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                } elseif ($size > 1000000) {
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                          <strong>Gagal!!!</strong> Ukuran Foto Tidak Boleh Lebih Dari 1Mb!!
+                          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                } elseif ((!$ekstensi_ok)) {
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                              <strong>Gagal!!!</strong> Format Foto harus jpg, png, jpeg!!
+                              <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+                } else {
+                
                 $a = "INSERT INTO tbldosen VALUES('$nidn', '$nama', '$pendidikan',
                  '$jenis_kelamin', '$alamat', '$foto')";
                 $b = mysqli_query($koneksi, $a);
                 move_uploaded_file($tmp, "foto/$foto");
                 if ($b) {
                     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-  <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=dosen'>LIHAT DATA</a>.
-  <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-</div>";
+                          <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=dosen'>LIHAT DATA</a>.
+                          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
                 } else {
                     echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
                     <strong>Berhasil!</strong> Data gagal disimpan.
@@ -32,6 +64,7 @@
                   </div>";
                 }
             }
+        }
             ?>
         <form method="POST" action="" enctype="multipart/form-data">
             <div class="row mb-3">

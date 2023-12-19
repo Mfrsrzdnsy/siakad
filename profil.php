@@ -5,7 +5,7 @@
     <div class="card-body">
 
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table" border="0">
                 <thead>
                     <tr><img src="img/hacker.png" width="200px" alt=""></tr>
                 </thead>

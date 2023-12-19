@@ -49,7 +49,7 @@
                             </div>";
                 } else {
                     $a = "insert into tblmahasiswa values('$nim','$nama_mhs','$prodi','$semester',
-	            '$alamat','$jnskel','$foto')";
+	                '$alamat','$jnskel','$foto')";
                     $b = mysqli_query($koneksi, $a);
                     move_uploaded_file($tmp, "foto/$foto");
                     if ($b) {

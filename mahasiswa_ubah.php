@@ -10,39 +10,77 @@
             include "koneksi.php";
             if (isset($_GET['nim'])) {
                 $nim = $_GET['nim'];
-                $tampil = "select * from tblmahasiswa where nim='$nim'";
+                $tampil = "SELECT * FROM tblmahasiswa WHERE nim='$nim'";
                 $qtampil = mysqli_query($koneksi, $tampil);
                 $dt = mysqli_fetch_array($qtampil);
             } else {
                 header("location:?page=mahasiswa");
             }
+            
             if (isset($_POST['simpan'])) {
                 $nama_mhs = $_POST['nama_mhs'];
                 $prodi = $_POST['prodi'];
                 $semester = $_POST['semester'];
                 $alamat = $_POST['alamat'];
                 $jnskel = $_POST['jnskel'];
+
+                //validasi foto
                 $foto = $_FILES['foto']['name'];
                 $tmp = $_FILES['foto']['tmp_name'];
-                if (strlen($foto > 0)) {
-                    $a = "update tblmahasiswa set nama_mhs='$nama_mhs',prodi='$prodi',semester='$semester',
-		alamat='$alamat',jnskel='$jnskel',foto='$foto' where nim='$nim'";
-                    $b = mysqli_query($koneksi, $a);
-                    move_uploaded_file($tmp, "foto/$foto");
+                $size = $_FILES['foto']['size'];
+                $ekstensi = array('jpg', 'png', 'jpeg');
+                $ekstensi_file = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
+                $ekstensi_ok = in_array($ekstensi_file, $ekstensi);
+                
+                if (strlen($foto) > 0) {
+                    if ($size > 1000000) {
+                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            <strong>Gagal!!!</strong> Ukuran Foto Tidak Boleh Lebih Dari 1Mb!!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    } elseif (!$ekstensi_ok) {
+                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            <strong>Gagal!!!</strong> Format Foto harus jpg, png, jpeg!!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    } else {
+                        $a = "UPDATE tblmahasiswa SET nama_mhs='$nama_mhs',prodi='$prodi',semester='$semester',
+                            alamat='$alamat',jnskel='$jnskel',foto='$foto' WHERE nim='$nim'";
+                        $b = mysqli_query($koneksi, $a);
+                        move_uploaded_file($tmp, "foto/$foto");
+            
+                        if ($b) {
+                            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=mahasiswa'>LIHAT DATA</a>.
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+                        } else {
+                            echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                                <strong>Gagal!</strong> Data gagal disimpan.
+                                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+                        }
+                    }
                 } else {
-                    $a = "update tblmahasiswa set nama_mhs='$nama_mhs',prodi='$prodi',semester='$semester',
-		alamat='$alamat',jnskel='$jnskel' where nim='$nim'";
+                    $a = "UPDATE tblmahasiswa SET nama_mhs='$nama_mhs',prodi='$prodi',semester='$semester',
+                        alamat='$alamat',jnskel='$jnskel' WHERE nim='$nim'";
                     $b = mysqli_query($koneksi, $a);
-                }
-                if ($b) {
-                    header("location:?page=mahasiswa");
-                } else {
-                    echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
-  <strong>Berhasil!</strong> Data berhasil disimpan.
-  <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-</div>";
+            
+                    if ($b) {
+                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                              <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=mahasiswa'>LIHAT DATA</a>.
+                              <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+                    } else {
+                        echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                            <strong>Gagal!</strong> Data gagal disimpan.
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    }
                 }
             }
+        
+
             ?>
         <form method="POST" action="" enctype="multipart/form-data">
             <div class="row mb-3">
@@ -75,8 +113,8 @@
                                                                 } ?>>Teknologi Informasi
                         </option>
                         <option value="Manajemen" <?php if ($dt['prodi'] == "Manajemen") {
-                                                                    echo "selected";
-                                                                } ?>>Manajemen</option>
+                                                            echo "selected";
+                                                        } ?>>Manajemen</option>
                         <option value="Manajemen Komputer" <?php if ($dt['prodi'] == "Menajemen Komputer") {
                                                                     echo "selected";
                                                                 } ?>>Manajemen Komputer</option>

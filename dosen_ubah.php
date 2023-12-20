@@ -21,27 +21,64 @@
                 $pendidikan = $_POST['pendidikan'];
                 $jenis_kelamin = $_POST['jenis_kelamin'];
                 $alamat = $_POST['alamat'];
+
+
+                //validasi foto
                 $foto = $_FILES['foto']['name'];
                 $tmp = $_FILES['foto']['tmp_name'];
+                $size = $_FILES['foto']['size'];
+                $ekstensi = array('jpg', 'png', 'jpeg');
+                $ekstensi_file = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
+                $ekstensi_ok = in_array($ekstensi_file, $ekstensi);
+
+                
                 if (strlen($foto > 0)) {
+                    if ($size > 1000000) {
+                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            <strong>Gagal!!!</strong> Ukuran Foto Tidak Boleh Lebih Dari 1Mb!!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    } elseif (!$ekstensi_ok) {
+                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            <strong>Gagal!!!</strong> Format Foto harus jpg, png, jpeg!!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    } else {
                     $a = "UPDATE tbldosen SET nama='$nama',pendidikan='$pendidikan',jenis_kelamin='$jenis_kelamin',
-		alamat='$alamat',foto='$foto' where nidn='$nidn'";
+		                alamat='$alamat',foto='$foto' where nidn='$nidn'";
                     $b = mysqli_query($koneksi, $a);
                     move_uploaded_file($tmp, "foto/$foto");
-                } else {
-                    $a = "UPDATE tbldosen SET nama='$nama',pendidikan='$pendidikan',jenis_kelamin='$jenis_kelamin',
-		alamat='$alamat' where nidn='$nidn'";
-                    $b = mysqli_query($koneksi, $a);
+                
+                    if ($b) {
+                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                        <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=dosen'>LIHAT DATA</a>.
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    } else {
+                        echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                            <strong>Gagal!</strong> Data gagal disimpan.
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    }
                 }
+            } else {
+                    $a = "UPDATE tbldosen SET nama='$nama',pendidikan='$pendidikan',jenis_kelamin='$jenis_kelamin',
+		                alamat='$alamat' where nidn='$nidn'";
+                    $b = mysqli_query($koneksi, $a);
+                    
                 if ($b) {
-                    header("location:?page=dosen");
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                              <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=dosen'>LIHAT DATA</a>.
+                              <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
                 } else {
                     echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
-  <strong>Berhasil!</strong> Data berhasil disimpan.
-  <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-</div>";
+                          <strong>Berhasil!</strong> Data berhasil disimpan.
+                          <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
                 }
             }
+        }
             ?>
         <form method="POST" action="" enctype="multipart/form-data">
             <div class="row mb-3">

@@ -43,7 +43,7 @@
                             <a href="?page=mahasiswa_ubah&&nim=<?php echo $a['nim']; ?>" class='btn btn-success'><i
                                     class="fas fa-edit"></i></a>
                             <?php if ($_SESSION['level'] == "admin") { ?>
-                            <a href="?page=mahasiswa_hapus&&nim=<?php echo $a['nim']; ?>" class='btn btn-danger'
+                            <a href="?page=mahasiswa_hapus&&email=<?php echo $a['email']; ?>" class='btn btn-danger'
                                 onclick="return confirm('Apakah anda yakin ingin menghapus data ini !!!')"><i
                                     class=" fas fa-trash"></i></a>
                             <?php } ?>

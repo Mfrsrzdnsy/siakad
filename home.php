@@ -3,32 +3,52 @@
         Selamat Datang <?php echo $_SESSION['nama_lengkap']; ?>
     </div>
     <div class="card-body">
-        <?php
-        if ($_SESSION['level'] == "admin") { ?>
         <h5 class="card-title">Anda adalah Administrator!</h5>
-        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-            into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-            release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-            software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        <a href="#" class="btn btn-warning">Go somewhere</a>
-        <?php } elseif ($_SESSION['level'] == "dosen") { ?>
-        <h5 class="card-title">Anda adalah Dosen!</h5>
-        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-            into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-            release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-            software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        <?php } elseif ($_SESSION['level'] == "mahasiswa") { ?>
-        <h5 class="card-title">Anda adalah Mahasiswa!</h5>
-        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-            into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-            release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-            software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        <?php } ?>
+        <table class="table">
+            <tbody>
+                <?php
+            if ($_SESSION['level'] == "mahasiswa") { 
+            $sqltampil = mysqli_query($koneksi, "SELECT * FROM tblmahasiswa WHERE email = '$_SESSION[email]'");
+            $data = mysqli_fetch_assoc($sqltampil);
+            ?>
+                <tr>
+                    <td>Nama Lengkap</td>
+                    <td>: <?php echo $data['nama_mhs']; ?></td>
+                    <td rowspan="7"><img src="foto/<?php echo $data['foto']; ?>" width="150px" class="img-thumbnail"
+                            alt="...">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nomor Induk Mahasiswa</td>
+                    <td>: <?php echo $data['nim']; ?></td>
+                </tr>
+                <tr>
+                    <td>Semester</td>
+                    <td>: <?php echo $data['semester']; ?></td>
+                </tr>
+                <tr>
+                    <td>Program Study</td>
+                    <td>: <?php echo $data['prodi']; ?> </td>
+                </tr>
+                <tr>
+                    <td>Alamat</td>
+                    <td>: <?php echo $data['alamat']; ?></td>
+                </tr>
+                <tr>
+                    <td>Jenis Kelamin</td>
+                    <td>: <?php echo $data['jnskel']; ?></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>: <?php echo $data['email']; ?></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-end mb-3">
+            <a class="btn btn-warning ml-auto" href="?page=profil_ubah&nim=<?php echo $data['nim'];?>"
+                role="button">Update
+                Profil </a>
+        </div>
     </div>
 </div>

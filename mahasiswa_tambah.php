@@ -18,6 +18,7 @@
                 $prodi = $_POST['prodi'];
                 $semester = $_POST['semester'];
                 $jnskel = $_POST['jnskel'];
+                $email = $_POST['email'];
                 $alamat = $_POST['alamat'];
 
                 //validasi Foto
@@ -27,6 +28,7 @@
                 $ekstensi = array('jpg', 'png', 'jpeg');
                 $ekstensi_file = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
                 $ekstensi_ok = in_array($ekstensi_file, $ekstensi);
+                $pass = md5("123");
 
                 //validasi
                 $cek = mysqli_query($koneksi, "SELECT * FROM tblmahasiswa WHERE nim='$nim'");
@@ -52,10 +54,11 @@
                               <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                             </div>";
                 } else {
-                    $a = "insert into tblmahasiswa values('$nim','$nama_mhs','$prodi','$semester',
-	                '$alamat','$jnskel','$foto')";
+                    $a = "INSERT into tblmahasiswa values('$nim','$nama_mhs','$prodi','$semester',
+	                '$alamat','$jnskel','$email','$foto')";
                     $b = mysqli_query($koneksi, $a);
                     move_uploaded_file($tmp, "foto/$foto");
+                    $input = mysqli_query($koneksi, "INSERT INTO user VALUES('$email','$pass','mahasiswa','$nama_mhs','$foto')");
                     if ($b) {
                         echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
                               <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=mahasiswa'>LIHAT DATA</a>.
@@ -134,12 +137,20 @@
                 </div>
             </fieldset>
             <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-4 col-form-label">Email <font color="red">*</font>
+                </label>
+                <div class=" col-sm-8">
+                    <input type="email" name="email" class="form-control" id="inputPassword3" required>
+                </div>
+            </div>
+            <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-4 col-form-label">Alamat</label>
                 <div class="col-sm-8">
                     <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"
                         required></textarea>
                 </div>
             </div>
+
             <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-4 col-form-label"></label>
                 <div class="col-sm-8">

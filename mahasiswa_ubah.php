@@ -23,6 +23,7 @@
                 $semester = $_POST['semester'];
                 $alamat = $_POST['alamat'];
                 $jnskel = $_POST['jnskel'];
+                $email = $_POST['email'];
 
                 //validasi foto
                 $foto = $_FILES['foto']['name'];
@@ -45,7 +46,7 @@
                         </div>";
                     } else {
                         $a = "UPDATE tblmahasiswa SET nama_mhs='$nama_mhs',prodi='$prodi',semester='$semester',
-                            alamat='$alamat',jnskel='$jnskel',foto='$foto' WHERE nim='$nim'";
+                            alamat='$alamat',jnskel='$jnskel',email='$email',foto='$foto' WHERE nim='$nim'";
                         $b = mysqli_query($koneksi, $a);
                         move_uploaded_file($tmp, "foto/$foto");
             
@@ -63,7 +64,7 @@
                     }
                 } else {
                     $a = "UPDATE tblmahasiswa SET nama_mhs='$nama_mhs',prodi='$prodi',semester='$semester',
-                        alamat='$alamat',jnskel='$jnskel' WHERE nim='$nim'";
+                        alamat='$alamat',jnskel='$jnskel',email='$email' WHERE nim='$nim'";
                     $b = mysqli_query($koneksi, $a);
             
                     if ($b) {
@@ -183,6 +184,14 @@
 
                 </div>
             </fieldset>
+            <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-4 col-form-label">Email <font color="red">*</font>
+                </label>
+                <div class=" col-sm-8">
+                    <input type="email" name="email" value="<?php echo $dt['email']; ?>" class="form-control"
+                        id="inputPassword3" required>
+                </div>
+            </div>
             <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-4 col-form-label">Upload Foto</label>
                 <div class="col-sm-8">

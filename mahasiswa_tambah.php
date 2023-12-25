@@ -58,7 +58,7 @@
 	                '$alamat','$jnskel','$email','$foto')";
                     $b = mysqli_query($koneksi, $a);
                     move_uploaded_file($tmp, "foto/$foto");
-                    $input = mysqli_query($koneksi, "INSERT INTO user VALUES('$email','$pass','mahasiswa','$nama_mhs','$foto')");
+                    $input = mysqli_query($koneksi, "INSERT INTO user VALUES('$email','$pass','mahasiswa','$nama_mhs')");
                     if ($b) {
                         echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
                               <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=mahasiswa'>LIHAT DATA</a>.

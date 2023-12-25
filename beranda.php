@@ -76,7 +76,7 @@ if (isset($_SESSION['email']) and isset($_SESSION['level'])) {
                     <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-server"></i> Data
                         Program Studi</a>
                     <?php } elseif ($_SESSION['level'] == "dosen") { ?>
-                    <a href="?page=profil" class="list-group-item list-group-item-action"><i
+                    <a href="?page=dosen_profil" class="list-group-item list-group-item-action"><i
                             class="far fa-address-card"></i> Update Profil</a>
                     <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-server"></i> Lihat
                         KRS</a>
@@ -85,7 +85,7 @@ if (isset($_SESSION['email']) and isset($_SESSION['level'])) {
                     <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-calendar"></i> Jadwal
                         Mengajar</a>
                     <?php } elseif ($_SESSION['level'] == "mahasiswa") { ?>
-                    <a href="?page=profil" class="list-group-item list-group-item-action"><i
+                    <a href="?page=mahasiswa_profil" class="list-group-item list-group-item-action"><i
                             class="far fa-address-card"></i> Update Profil</a>
                     <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-eye-dropper"></i> Isi
                         KRS</a>

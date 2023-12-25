@@ -29,7 +29,6 @@
                     while ($a = mysqli_fetch_array($query)) {
                     ?>
                 <tbody>
-                    <td><img src="foto/<?php echo $a['foto'] ?>" width="70px" alt=""></td>
                     <td><?php echo $a['nama_lengkap'] ?></td>
                     <td><?php echo $a['level'] ?></td>
                     <td><?php echo $a['email'] ?></td>

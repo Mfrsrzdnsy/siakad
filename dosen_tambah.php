@@ -13,6 +13,7 @@
                 $nama = $_POST['nama'];
                 $pendidikan = $_POST['pendidikan'];
                 $jenis_kelamin = $_POST['jenis_kelamin'];
+                $email = $_POST['email'];
                 $alamat = $_POST['alamat'];
 
                 // Validasi Foto
@@ -22,6 +23,7 @@
                 $ekstensi = array('jpg', 'png', 'jpeg');
                 $ekstensi_file = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
                 $ekstensi_ok = in_array($ekstensi_file, $ekstensi);
+                $pass = md5("111");
 
                 // Validasi
                 $cek = mysqli_query($koneksi, "SELECT * FROM tbldosen WHERE nidn='$nidn'");
@@ -49,9 +51,10 @@
                 } else {
                 
                 $a = "INSERT INTO tbldosen VALUES('$nidn', '$nama', '$pendidikan',
-                 '$jenis_kelamin', '$alamat', '$foto')";
+                 '$jenis_kelamin', '$alamat','$email', '$foto')";
                 $b = mysqli_query($koneksi, $a);
                 move_uploaded_file($tmp, "foto/$foto");
+                $input = mysqli_query($koneksi, "INSERT INTO user VALUES('$email','$pass','dosen','$nama')");
                 if ($b) {
                     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
                           <strong>Berhasil!</strong> Data berhasil disimpan, <a href='?page=dosen'>LIHAT DATA</a>.
@@ -119,8 +122,15 @@
                 </div>
             </div>
             <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-4 col-form-label">Email <font color="red">*</font>
+                </label>
+                <div class=" col-sm-8">
+                    <input type="email" name="email" class="form-control" id="inputPassword3" required>
+                </div>
+            </div>
+            <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-4 col-form-label">Upload Foto <font color="red">*</font>
-                    </label>
+                </label>
                 <div class="col-sm-8">
                     <input class="form-control" name="foto" type="file" id="formFile">
                 </div>
